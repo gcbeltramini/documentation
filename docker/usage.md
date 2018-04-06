@@ -31,12 +31,13 @@
 
 # Images
 
-- Build an image from a `Dockerfile`:
+- Build an image from a `Dockerfile` and a "context":
     ```shell
     $ docker build --tag <image-name> </path/to/context>
     $ docker build --tag <image-name> --file </path/to/Dockerfile> </path/to/context>
     ```
     - Use `.dockerignore` to exclude files and directories from the context
+    - A build's context is the set of files located in the specified path or URL (normally use `.`). The build process can refer to any of the files in the context. For example, your build can use a `COPY` instruction to reference a file in the context.
 - List images:
     ```shell
     $ docker images
@@ -77,6 +78,7 @@
     ```shell
     $ docker stop <container-id>
     ```
+    - Stop all containers: `$ docker stop $(docker ps -a -q)`
 - List all containers (running and stopped):
     ```shell
     $ docker ps -a
@@ -94,6 +96,7 @@
     ```shell
     $ docker rm <container-id> [<container-id>...]
     ```
+    - Remove all containers: `$ docker rm $(docker ps -a -q)`
 - Copy files/folders between a container and the local filesystem:
     ```shell
     $ docker cp <container-id>:<src/path> <local/destination/path/>
