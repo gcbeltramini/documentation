@@ -26,6 +26,7 @@
     ```
 - Push an image or a repository to a registry:
     ```shell
+    $ docker tag <image-name> <docker-registry-username>/<image-name>[:tag]
     $ docker push <docker-registry-username>/<image-name>[:tag]
     ```
 
