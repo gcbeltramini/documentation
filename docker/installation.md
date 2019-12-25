@@ -1,4 +1,4 @@
-# Get Docker CE for Ubuntu!?
+# Get Docker CE for Ubuntu
 
 For more information and alternative installation (download the DEB package and install it manually,
 or use testing environment), consult the reference.
