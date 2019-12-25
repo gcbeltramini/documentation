@@ -1,5 +1,5 @@
 
-# Definitions??
+# Definitions
 
 - Docker container: runtime instance of a docker image. It consists of:
   - A Docker image
