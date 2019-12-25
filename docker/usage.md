@@ -51,9 +51,9 @@ assemble an image.
   ```
 
   - Use `.dockerignore` to exclude files and directories from the context
-  - A build's context is the set of files located in the specified path or URL (normally use `.`).
- The build process can refer to any of the files in the context. For example, your build can use a
- `COPY` instruction to reference a file in the context.
+  - A build's context is the set of files located in the specified path or URL (normally use `.`).
+  The build process can refer to any of the files in the context. For example, your build can use a
+  `COPY` instruction to reference a file in the context.
 
 - List images:
 
