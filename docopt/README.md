@@ -16,7 +16,7 @@ Reference: <https://github.com/docopt/docopt>
 
 1. Run: `./my_command.py ...`
 
-1. Clean up:
+1. Clean up (if installed temporarily):
 
     ```bash
     conda deactivate
@@ -58,3 +58,10 @@ Reference: <https://github.com/docopt/docopts>
         - `docopt_print_ARGS`
 
 1. Run: `./my_command.sh ...`
+
+1. Clean up (if installed temporarily):
+
+    ```bash
+    rm "${INSTALLATION_FOLDER}/docopts"
+    "${INSTALLATION_FOLDER}/docopts.sh"
+    ```
