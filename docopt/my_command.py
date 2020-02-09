@@ -10,7 +10,8 @@ Usage:
   my_command.py action2 [--repeatable-param]...
                         [--param-array <v>]...
                         [<in-array1> <in-array2> <in-array3>]...
-  my_command.py         (--this_m | --that_m)
+  my_command.py         <argv>...
+                        (--this_m | --that_m)
                         [--this_o | --that_o]
                         [-v -v -v]
   my_command.py         --help | --version
@@ -18,6 +19,7 @@ Usage:
 Arguments:
   <in-value>              Some inputs.
   <in-array>              Some inputs registered as array.
+  <argv>                  Repeatable arguments.
 
 Options:
   -h, --help              Show this help message and exit.
@@ -40,7 +42,7 @@ Examples:
   my_command.py --version
   my_command.py action1 --boolean-param --named-param foo in1
   my_command.py action2 -r -r -a a1 -a a2 -a a3 in11 in21 in31 in12
-  my_command.py --that_m -vv
+  my_command.py foo bar --that_m -vv
 """
 
 from docopt import docopt
@@ -73,6 +75,7 @@ if __name__ == '__main__':
       '--this_o': bool,
       '--version': bool,
       '-v': non_negative_int,
+      '<argv>': list_with_str_content,
       '<in-array1>': list_with_str_content,
       '<in-array2>': list_with_str_content,
       '<in-array3>': list_with_str_content,
