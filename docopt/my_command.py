@@ -22,7 +22,7 @@ Arguments:
 Options:
   -h, --help              Show this help message and exit.
   --version               Show version and exit.
-  --boolean-param         Boolean parameter
+  --boolean-param         Boolean parameter.
   --named-param <v>       The value will be in "named-param", not in "v".
                           Without default, it will be "null". [default: 42]
   -r, --repeatable-param  The value will be the number of times this parameter
