@@ -22,3 +22,39 @@ Reference: <https://github.com/docopt/docopt>
     conda deactivate
     conda env remove -n docopt-env
     ```
+
+## Shell
+
+Reference: <https://github.com/docopt/docopts>
+
+1. Setup:
+    1. Download the pre-built Go binaries from the [releases page](https://github.com/docopt/docopts/releases).
+    In the assets list, choose the file for your operating system. Suggested version: `v0.6.3-rc1`.
+    1. Choose an installation folder:
+      * If it's temporary: `INSTALLATION_FOLDER="$(pwd)" && export PATH="${INSTALLATION_FOLDER}:${PATH}"`
+      * If it's permanent: `INSTALLATION_FOLDER="/usr/local/bin"`
+    1. In macOS Catalina:
+
+      ```bash
+      mv "${HOME}/Downloads/docopts_darwin_amd64" "${INSTALLATION_FOLDER}/docopts"
+      chmod +x "${INSTALLATION_FOLDER}/docopts"
+      xattr -d com.apple.quarantine "${INSTALLATION_FOLDER}/docopts"
+      ```
+
+    1. Optionally, download the `docopts.sh` lib helper:
+
+      ```bash
+      URL="https://raw.githubusercontent.com/docopt/docopts/master/docopts.sh"
+      (cd "${INSTALLATION_FOLDER}" && curl -O "${URL}")
+      ```
+
+    If you `source docopts.sh`, these functions are enabled:
+        - `docopt_auto_parse`
+        - `docopt_get_help_string`
+        - `docopt_get_version_string`
+        - `docopt_get_values`
+        - `docopt_get_eval_array`
+        - `docopt_get_raw_value`
+        - `docopt_print_ARGS`
+
+1. Run: `./my_command.sh ...`
