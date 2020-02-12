@@ -28,7 +28,8 @@ assemble an image.
     ```
 
     (the Ubuntu images and tags are here: <https://hub.docker.com/_/ubuntu/>)
-- Log in to a Docker registry:
+
+- Log in to [Docker Hub](https://hub.docker.com) (the default server) - first you need to create an account:
 
     ```shell
     docker login -u <docker-registry-username>
