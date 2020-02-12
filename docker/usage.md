@@ -38,8 +38,8 @@ assemble an image.
 - Push an image or a repository to a registry:
 
     ```shell
-    docker tag <image-name> <docker-registry-username>/<image-name>[:tag]
-    docker push <docker-registry-username>/<image-name>[:tag]
+    docker tag <image-name>[:<tag>] <docker-registry-username>/<image-name>[:<tag>]
+    docker push <docker-registry-username>/<image-name>[:<tag>]
     ```
 
 # Images
@@ -47,8 +47,8 @@ assemble an image.
 - Build an image from a `Dockerfile` and a "context":
 
   ```shell
-  docker build --tag <image-name> </path/to/context>
-  docker build --tag <image-name> --file </path/to/Dockerfile> </path/to/context>
+  docker build --tag <image-name>[:<tag>] </path/to/context>
+  docker build --tag <image-name>[:<tag>] --file </path/to/Dockerfile> </path/to/context>
   ```
 
   - Use `.dockerignore` to exclude files and directories from the context
