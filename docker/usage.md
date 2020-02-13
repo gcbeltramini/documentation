@@ -41,13 +41,13 @@ assemble an image.
 
 - Push an image or a repository to a registry:
 
-    ```shell
-    docker tag <image-name>[:<tag>] <docker-registry-username>/<image-name>[:<tag>]
-    docker push <docker-registry-username>/<image-name>[:<tag>]
-    ```
+  ```shell
+  docker tag <image-name>[:<tag>] <docker-registry-username>/<image-name>[:<tag>]
+  docker push <docker-registry-username>/<image-name>[:<tag>]
+  ```
 
-    - Check if the image appears in your list of repositories at <https://hub.docker.com>
-    - In the `Settings` tab of this image at <https://hub.docker.com>, make it public if you wish
+  - Check if the image appears in your list of repositories at <https://hub.docker.com>
+  - In the `Settings` tab of this image at <https://hub.docker.com>, make it public if you wish
     (it is private by default).
 
 # Images
