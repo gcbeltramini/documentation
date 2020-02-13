@@ -46,6 +46,10 @@ assemble an image.
     docker push <docker-registry-username>/<image-name>[:<tag>]
     ```
 
+    - Check if the image appears in your list of repositories at <https://hub.docker.com>
+    - In the `Settings` tab of this image at <https://hub.docker.com>, make it public if you wish
+    (it is private by default).
+
 # Images
 
 - Build an image from a `Dockerfile` and a "context":
