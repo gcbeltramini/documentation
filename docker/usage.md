@@ -23,7 +23,7 @@ assemble an image.
 - Pull image from Docker Hub:
 
     ```shell
-    docker pull <name>:<tag> # if no tag is given, it assumes `latest`
+    docker pull <name>[:<tag>] # if no tag is given, it assumes `latest`
     docker pull ubuntu:16.04
     ```
 
@@ -35,20 +35,28 @@ assemble an image.
     docker login -u <docker-registry-username>
     ```
 
+    In `~/.docker/config.json` the new key `https://index.docker.io/v1/` will be added to `auths`
+    (possibly with the value `{}`). In macOS, the password is saved in the Keychain if
+    `~/.docker/config.json` has `"credsStore": "osxkeychain"`.
+
 - Push an image or a repository to a registry:
 
-    ```shell
-    docker tag <image-name> <docker-registry-username>/<image-name>[:tag]
-    docker push <docker-registry-username>/<image-name>[:tag]
-    ```
+  ```shell
+  docker tag <image-name>[:<tag>] <docker-registry-username>/<image-name>[:<tag>]
+  docker push <docker-registry-username>/<image-name>[:<tag>]
+  ```
+
+  - Check if the image appears in your list of repositories at <https://hub.docker.com>
+  - In the `Settings` tab of this image at <https://hub.docker.com>, make it public if you wish
+    (it is private by default).
 
 # Images
 
 - Build an image from a `Dockerfile` and a "context":
 
   ```shell
-  docker build --tag <image-name> </path/to/context>
-  docker build --tag <image-name> --file </path/to/Dockerfile> </path/to/context>
+  docker build --tag <image-name>[:<tag>] </path/to/context>
+  docker build --tag <image-name>[:<tag>] --file </path/to/Dockerfile> </path/to/context>
   ```
 
   - Use `.dockerignore` to exclude files and directories from the context
