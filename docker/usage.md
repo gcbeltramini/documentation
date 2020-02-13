@@ -23,7 +23,7 @@ assemble an image.
 - Pull image from Docker Hub:
 
     ```shell
-    docker pull <name>:<tag> # if no tag is given, it assumes `latest`
+    docker pull <name>[:<tag>] # if no tag is given, it assumes `latest`
     docker pull ubuntu:16.04
     ```
 
@@ -34,6 +34,10 @@ assemble an image.
     ```shell
     docker login -u <docker-registry-username>
     ```
+
+    In `~/.docker/config.json` the new key `https://index.docker.io/v1/` will be added to `auths`
+    (possibly with the value `{}`). In macOS, the password is saved in the Keychain if
+    `~/.docker/config.json` has `"credsStore": "osxkeychain"`.
 
 - Push an image or a repository to a registry:
 
