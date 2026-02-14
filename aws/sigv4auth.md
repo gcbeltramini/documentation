@@ -27,4 +27,7 @@ authentication headers for AWS services:
    signature, and assembling the required HTTP headers;
 2. Use the official `botocore` library.
 
-To make sure that the headers are correct, we make a request to the AWS service and show the response.
+In addition to these implementation functions, the script also includes example usage code at the
+bottom of the file that runs when the script is executed directly. This example uses one of the
+strategies to make a request to an AWS service and prints the response, which helps verify that the
+generated headers are correct.
