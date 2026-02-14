@@ -278,7 +278,7 @@ if __name__ == "__main__":
     # Credentials:
     aws_access_key_id: str = os.getenv("AWS_ACCESS_KEY_ID", "")
     aws_secret_access_key: str = os.getenv("AWS_SECRET_ACCESS_KEY", "")
-    aws_session_token: str = os.getenv("AWS_SESSION_TOKEN", "")
+    aws_session_token: str | None = os.getenv("AWS_SESSION_TOKEN")
 
     # Example 1: S3 ListBuckets
     method: str = "GET"
