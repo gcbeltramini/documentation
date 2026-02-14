@@ -282,8 +282,10 @@ aws_session_token: str = "c..."
 # Example 1: S3 ListBuckets
 method: str = "GET"
 aws_region: str = "us-east-1"
-# For S3, the region must be "us-east-1", otherwise this error will be returned:
-# AuthorizationHeaderMalformed: The authorization header is malformed; the region '...' is wrong; expecting 'us-east-1'
+# For the global S3 endpoint "s3.amazonaws.com", the signing region must be "us-east-1",
+# otherwise this error will be returned:
+#   AuthorizationHeaderMalformed: The authorization header is malformed; the region '...' is wrong; expecting 'us-east-1'
+# When using regional S3 endpoints (for example, "s3.us-west-2.amazonaws.com"), use the actual region (e.g., "us-west-2").
 aws_service: str = "s3"
 aws_host: str = "s3.amazonaws.com"
 aws_request_parameters: dict[str, str] = {"Action": "ListBuckets", "Version": "2006-03-01"}
