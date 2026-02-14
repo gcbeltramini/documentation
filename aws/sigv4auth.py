@@ -257,7 +257,8 @@ def generate_aws_headers_botocore(
         if isinstance(aws_request_parameters, str)
         else urlencode(sorted(aws_request_parameters.items()))
     )
-    url: str = "https://" + aws_host.rstrip("/") + "/?" + query_parameters
+    base_url: str = "https://" + aws_host.rstrip("/") + "/"
+    url: str = base_url if not query_parameters else base_url + "?" + query_parameters
     aws_request = AWSRequest(method=method, url=url, data=aws_payload)
     credentials = namedtuple("Credentials", ["access_key", "secret_key", "token"])(
         aws_access_key_id, aws_secret_access_key, aws_session_token
