@@ -305,7 +305,7 @@ if __name__ == "__main__":
     # aws_request_parameters: dict[str, str] = {"Action": "GetCallerIdentity", "Version": "2011-06-15"}
     # aws_payload: str = ""  # GET: no payload
 
-    # Example 3: STS GetCallerIdentity (POST)
+    # # Example 3: STS GetCallerIdentity (POST)
     # method: str = "POST"
     # aws_region: str = "us-west-2"
     # aws_service: str = "sts"
@@ -314,7 +314,7 @@ if __name__ == "__main__":
     # aws_payload_dict: dict[str, str] = {"Action": "GetCallerIdentity", "Version": "2011-06-15"}
     # aws_payload = urlencode(sorted(aws_payload_dict.items()))
 
-    headers = generate_aws_headers_botocore(
+    headers = generate_aws_headers(
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
         aws_session_token=aws_session_token,
