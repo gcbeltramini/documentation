@@ -1,4 +1,5 @@
 import hmac
+import os
 from collections import namedtuple
 from datetime import UTC, datetime
 from hashlib import sha256
@@ -164,7 +165,7 @@ def generate_aws_headers(
     date_stamp: str = amz_date[0:8]  # Date without time, used in credential scope
 
     # 1. Create the canonical request
-    canonical_uri: str = "/"
+    canonical_uri: str = "/"  # The URI path for the request; for S3 ListBuckets, this is just "/"
     canonical_query_string: str = (
         aws_request_parameters
         if isinstance(aws_request_parameters, str)
@@ -257,11 +258,8 @@ def generate_aws_headers_botocore(
     )
     url: str = "https://" + aws_host.rstrip("/") + "/?" + query_parameters
     aws_request = AWSRequest(method=method, url=url, data=aws_payload)
-    credentials = namedtuple("Credentials", ["access_key", "secret_key", "token"])  # noqa: PYI024
-    credentials = credentials(
-        access_key=aws_access_key_id,
-        secret_key=aws_secret_access_key,
-        token=aws_session_token,
+    credentials = namedtuple("Credentials", ["access_key", "secret_key", "token"])(
+        aws_access_key_id, aws_secret_access_key, aws_session_token
     )
     if aws_service == "s3":
         S3SigV4Auth(credentials, aws_service, aws_region).add_auth(aws_request)
@@ -272,44 +270,45 @@ def generate_aws_headers_botocore(
     return headers
 
 
-# Example usage
+if __name__ == "__main__":
+    # Example usage
 
-# Credentials:
-aws_access_key_id: str = "A..."
-aws_secret_access_key: str = "b..."
-aws_session_token: str = "c..."
+    # Credentials:
+    aws_access_key_id: str = os.getenv("AWS_ACCESS_KEY_ID", "")
+    aws_secret_access_key: str = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+    aws_session_token: str = os.getenv("AWS_SESSION_TOKEN", "")
 
-# Example 1: S3 ListBuckets
-method: str = "GET"
-aws_region: str = "us-east-1"
-# For the global S3 endpoint "s3.amazonaws.com", the signing region must be "us-east-1",
-# otherwise this error will be returned:
-#   AuthorizationHeaderMalformed: The authorization header is malformed; the region '...' is wrong; expecting 'us-east-1'
-# When using regional S3 endpoints (for example, "s3.us-west-2.amazonaws.com"), use the actual region (e.g., "us-west-2").
-aws_service: str = "s3"
-aws_host: str = "s3.amazonaws.com"
-aws_request_parameters: dict[str, str] = {"Action": "ListBuckets", "Version": "2006-03-01"}
+    # # Example 1: S3 ListBuckets
+    # method: str = "GET"
+    # aws_region: str = "us-east-1"
+    # # For the global S3 endpoint "s3.amazonaws.com", the signing region must be "us-east-1",
+    # # otherwise this error will be returned:
+    # #   AuthorizationHeaderMalformed: The authorization header is malformed; the region '...' is wrong; expecting 'us-east-1'
+    # # When using regional S3 endpoints (for example, "s3.us-west-2.amazonaws.com"), use the actual region (e.g., "us-west-2").
+    # aws_service: str = "s3"
+    # aws_host: str = "s3.amazonaws.com"
+    # aws_request_parameters: dict[str, str] = {"Action": "ListBuckets", "Version": "2006-03-01"}
 
-# Example 2: STS GetCallerIdentity
-method: str = "GET"
-aws_region: str = "us-west-2"
-aws_service: str = "sts"
-aws_host: str = f"sts.{aws_region:s}.amazonaws.com"
-aws_request_parameters: dict[str, str] = {"Action": "GetCallerIdentity", "Version": "2011-06-15"}
+    # Example 2: STS GetCallerIdentity
+    method: str = "GET"
+    aws_region: str = "us-west-2"
+    aws_service: str = "sts"
+    aws_host: str = f"sts.{aws_region:s}.amazonaws.com"
+    aws_request_parameters: dict[str, str] = {"Action": "GetCallerIdentity", "Version": "2011-06-15"}
 
-# Generate headers (also works with `generate_aws_headers_botocore`)
-headers: dict[str, str] = generate_aws_headers(
-    aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key,
-    aws_session_token=aws_session_token,
-    aws_region=aws_region,
-    aws_service=aws_service,
-    method=method,
-    aws_host=aws_host,
-    aws_request_parameters=aws_request_parameters,
-)
+    # Generate headers (also works with `generate_aws_headers_botocore`)
+    headers: dict[str, str] = generate_aws_headers(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        aws_session_token=aws_session_token,
+        aws_region=aws_region,
+        aws_service=aws_service,
+        method=method,
+        aws_host=aws_host,
+        aws_request_parameters=aws_request_parameters,
+    )
 
-# Make the request with the generated headers
-resp = request(method=method, url=f"https://{aws_host:s}", params=aws_request_parameters, headers=headers)
-print(f"Status code: {resp.status_code}")
-print(f"Response: {resp.text}")
+    # Make the request with the generated headers
+    resp = request(method=method, url=f"https://{aws_host:s}", params=aws_request_parameters, headers=headers)
+    print(f"Status code: {resp.status_code}")
+    print(f"Response: {resp.text}")
