@@ -24,7 +24,7 @@ The Python script `sigv4auth.py` contains two strategies to generate AWS Signatu
 authentication headers for AWS services:
 
 1. Manually construct SigV4-signed requests, by building the canonical request, string to sign, and
-   signature, and assembling the required HTTP headers;
+   signature, and assembling the required HTTP headers. No external dependency is required.
 2. Use the official `botocore` library.
 
 In addition to these implementation functions, the script also includes example usage code at the

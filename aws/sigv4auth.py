@@ -6,12 +6,10 @@ from hashlib import sha256
 from pprint import pprint
 from urllib.parse import urlencode
 
-from botocore.auth import S3SigV4Auth, SigV4Auth
-from botocore.awsrequest import AWSRequest
 from requests import request
 
 
-def sign(key: bytes, msg: str, hex: bool = False) -> bytes | str:
+def sign(key: bytes, msg: str, as_hex: bool = False) -> bytes | str:
     r"""
     Return the HMAC-SHA256 signature for a given message using the provided key.
 
@@ -21,7 +19,7 @@ def sign(key: bytes, msg: str, hex: bool = False) -> bytes | str:
         The signing key.
     msg : str
         The message to sign.
-    hex : bool, optional
+    as_hex : bool, optional
         If True, return the signature as a hexadecimal string instead of bytes.
 
     Returns
@@ -37,11 +35,11 @@ def sign(key: bytes, msg: str, hex: bool = False) -> bytes | str:
     --------
     >>> sign(key=b"my_secret_key", msg="Hello, World!")
     b"\xf3\xca\xf5\xd4~<\x8c\xde\xa3\xb3\xae\x8c\x87\xb6M$}M\xac\xf7\x83\xb8\xd1q\x086y\xd52\x91Y\xcc"
-    >>> sign(key=b"my_secret_key", msg="Hello, World!", hex=True)
+    >>> sign(key=b"my_secret_key", msg="Hello, World!", as_hex=True)
     "f3caf5d47e3c8cdea3b3ae8c87b64d247d4dacf783b8d171083679d5329159cc"
     """
     hm = hmac.new(key, msg.encode("utf-8"), sha256)
-    if hex:
+    if as_hex:
         return hm.hexdigest()
     else:
         return hm.digest()
@@ -172,6 +170,10 @@ def generate_aws_headers(
         if isinstance(aws_request_parameters, str)
         else urlencode(sorted(aws_request_parameters.items()))
     )
+    # SigV4 canonical query string encoding has stricter rules than urllib.parse.urlencode (e.g.,
+    # spaces must be "%20" not "+", and RFC3986 percent-encoding/sorting is required). Using `urlencode`
+    # here can produce invalid signatures for inputs containing spaces/special characters. Ideally,
+    # we should use the same percent-encoding routine as botocore/AWS spec rather than `urlencode`.
     canonical_headers_dict: dict[str, str] = {
         "host": aws_host,
         "x-amz-date": amz_date,
@@ -252,6 +254,9 @@ def generate_aws_headers_botocore(
     aws_request_parameters: str | dict[str, str],
     aws_payload: str = "",
 ) -> dict[str, str]:
+    from botocore.auth import S3SigV4Auth, SigV4Auth
+    from botocore.awsrequest import AWSRequest
+
     query_parameters: str = (
         aws_request_parameters
         if isinstance(aws_request_parameters, str)
@@ -327,8 +332,14 @@ if __name__ == "__main__":
     # Make the request with the generated headers
     print("Headers:")
     pprint(headers)
+    if isinstance(aws_request_parameters, dict):
+        # Use a sorted list of tuples so that query parameter ordering matches the signing canonicalization
+        request_params: list[tuple[str, str]] = sorted(aws_request_parameters.items())
+    else:
+        # For cases where aws_request_parameters is already a string or other pre-encoded form
+        request_params = aws_request_parameters
     resp = request(
-        method=method, url=f"https://{aws_host:s}", params=aws_request_parameters, headers=headers, data=aws_payload
+        method=method, url=f"https://{aws_host:s}", params=request_params, headers=headers, data=aws_payload
     )
     print(f"Status code: {resp.status_code}")
     print("Response:")
