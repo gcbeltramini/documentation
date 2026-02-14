@@ -248,6 +248,7 @@ def generate_aws_headers_botocore(
     method: str,
     aws_host: str,
     aws_request_parameters: str | dict[str, str],
+    aws_payload: str = "",
 ) -> dict[str, str]:
     query_parameters: str = (
         aws_request_parameters
@@ -255,8 +256,7 @@ def generate_aws_headers_botocore(
         else urlencode(sorted(aws_request_parameters.items()))
     )
     url: str = "https://" + aws_host.rstrip("/") + "/?" + query_parameters
-    aws_request = AWSRequest(method=method, url=url)
-    # aws_request = AWSRequest(method="POST", url=url, data=body)
+    aws_request = AWSRequest(method=method, url=url, data=aws_payload)
     credentials = namedtuple("Credentials", ["access_key", "secret_key", "token"])  # noqa: PYI024
     credentials = credentials(
         access_key=aws_access_key_id,

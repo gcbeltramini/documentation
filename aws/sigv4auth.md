@@ -20,7 +20,7 @@ References:
 4. **Add the Signature to the Request**: Include the signature in the `Authorization` header of the
    API request.
 
-The Python script `signv4auth.py` contains two strategies to generate AWS Signature Version 4 (SigV4)
+The Python script `sigv4auth.py` contains two strategies to generate AWS Signature Version 4 (SigV4)
 authentication headers for AWS services:
 
 1. Manually construct SigV4-signed requests, by building the canonical request, string to sign, and
