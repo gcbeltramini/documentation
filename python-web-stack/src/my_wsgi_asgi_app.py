@@ -1,0 +1,61 @@
+def gunicorn_app(environ, start_response):
+    """
+    Simplest possible WSGI application.
+
+    Parameters
+    ----------
+    environ : dict
+        A dictionary containing CGI-style environment variables.
+    start_response : callable
+        A callable accepting a status string and a list of (header_name, header_value) tuples.
+
+    References
+    ----------
+    - https://gunicorn.org/quickstart/?h=start_response
+    """
+    data: bytes = b"Hello from WSGI!"
+    response_headers = [
+        ("Content-type", "text/plain"),
+        ("Content-Length", str(len(data))),
+    ]
+    start_response("200 OK", response_headers)
+    return [data]
+
+
+async def uvicorn_app(scope, receive, send):
+    """
+    Simplest possible ASGI application.
+
+    Parameters
+    ----------
+    scope : dict
+        A dictionary containing connection scope information.
+    receive : callable
+        A callable to receive events.
+    send : callable
+        A callable to send events.
+
+    References
+    ----------
+    - https://uvicorn.dev/#quickstart
+    """
+    assert scope["type"] == "http"
+
+    content: bytes = b"Hello from ASGI!"
+
+    await send(
+        {
+            "type": "http.response.start",
+            "status": 200,
+            "headers": [
+                (b"content-type", b"text/plain"),
+                (b"content-length", str(len(content)).encode("utf-8")),
+            ],
+        }
+    )
+    await send(
+        {
+            "type": "http.response.body",
+            "body": content,
+        }
+    )

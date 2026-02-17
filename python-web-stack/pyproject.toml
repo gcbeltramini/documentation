@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "web-stack-playground"
+version = "0.1.0"
+description = "Python web stack playground."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+fastapi = ["fastapi<1"]
+flask = ["Flask>=3,<4"]
+gunicorn = ["gunicorn>=23,<24"]
+uvicorn = ["uvicorn>=0.34,<=0.40"]
