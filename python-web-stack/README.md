@@ -55,7 +55,7 @@ Different ways to serve the app:
       uvicorn my_fastapi_app:app --workers 4
     ```
 
-1. `FastAPI` + `gunicorn` + `uvicorn` workers:
+4. `FastAPI` + `gunicorn` + `uvicorn` workers:
    - Use case: production `FastAPI` setup
 
     ```shell
@@ -68,7 +68,7 @@ Different ways to serve the app:
       -b 0.0.0.0:8000
     ```
 
-2. `Flask` + `gunicorn` (sync)
+5. `Flask` + `gunicorn` (sync)
 
     ```shell
     uv run \
@@ -79,7 +79,7 @@ Different ways to serve the app:
       -b 0.0.0.0:8000
     ```
 
-3. Other options:
+6. Other options:
    - `FastAPI` with `gunicorn` (sync worker): not recommended, as `FastAPI` is async and should use
     an ASGI worker like `uvicorn` or `hypercorn`.
    - `Flask` with `uvicorn`: technically possible (since `Flask` is WSGI and `uvicorn` is ASGI, but
