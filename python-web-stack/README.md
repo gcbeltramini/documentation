@@ -1,5 +1,11 @@
 # Python web stack
 
+To prepare the Python env, in the terminal, `cd` into this folder and run:
+
+```shell
+uv python install 3.14
+```
+
 ## How to run the app
 
 Different ways to serve the app:
