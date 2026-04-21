@@ -68,6 +68,7 @@ Different ways to serve the app:
     uv run \
       --extra=fastapi \
       --extra=gunicorn \
+      --extra=uvicorn \
       gunicorn --chdir src my_fastapi_app:app \
       -k uvicorn.workers.UvicornWorker \
       -w 4 \
