@@ -28,17 +28,17 @@ Different ways to serve the app:
     - Can use a single process or, with `fastapi run`, multiple processes (workers) for parallelism
 
     ```shell
-    uv run --with 'fastapi[standard]' \
+    uv run --extra 'fastapi' \
       fastapi dev src/my_fastapi_app.py
     ```
 
     ```shell
-    uv run --with 'fastapi[standard]' \
+    uv run --extra 'fastapi' \
       fastapi run src/my_fastapi_app.py
     ```
 
     ```shell
-    uv run --with 'fastapi[standard]' \
+    uv run --extra 'fastapi' \
       fastapi run src/my_fastapi_app.py --workers=4
     ```
 

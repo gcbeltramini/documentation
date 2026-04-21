@@ -16,7 +16,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-fastapi = ["fastapi<1"]
+fastapi = ["fastapi[standard]<1"]
 flask = ["Flask>=3,<4"]
 gunicorn = ["gunicorn>=23,<24"]
 uvicorn = ["uvicorn>=0.34,<0.41"]
