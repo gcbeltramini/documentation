@@ -15,7 +15,7 @@ def gunicorn_app(environ, start_response):
     """
     data: bytes = b"Hello from WSGI!"
     response_headers = [
-        ("Content-type", "text/plain"),
+        ("Content-Type", "text/plain"),
         ("Content-Length", str(len(data))),
     ]
     start_response("200 OK", response_headers)
@@ -59,8 +59,8 @@ async def uvicorn_app(scope, receive, send):
                 "type": "http.response.start",
                 "status": 200,
                 "headers": [
-                    (b"content-type", b"text/plain"),
-                    (b"content-length", str(len(content)).encode("utf-8")),
+                    (b"Content-Type", b"text/plain"),
+                    (b"Content-Length", str(len(content)).encode("utf-8")),
                 ],
             }
         )
