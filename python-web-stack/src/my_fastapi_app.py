@@ -24,7 +24,7 @@ async def async_() -> dict[str, str]:
 
 
 @app.get("/hello/{name}")
-def print_name(name: str) -> str:
+def hello_name(name: str) -> str:
     return f"Your name is: {name}"
 
 

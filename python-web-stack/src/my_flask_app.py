@@ -17,7 +17,7 @@ def sync() -> dict[str, str]:
 
 
 @app.route("/hello/<name>")
-def print_name(name: str) -> str:
+def hello_name(name: str) -> str:
     return f"Your name is: {name:s}"
 
 
