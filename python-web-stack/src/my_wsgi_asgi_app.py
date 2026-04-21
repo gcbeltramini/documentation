@@ -50,7 +50,9 @@ async def uvicorn_app(scope, receive, send):
                 print("Application is shutting down...")
                 await send({"type": "lifespan.shutdown.complete"})
                 return
-    elif scope['type'] == 'http':
+            else:
+                raise RuntimeError(f"Unsupported ASGI lifespan message type: {message['type']}")
+    elif scope["type"] == "http":
         content: bytes = b"Hello from ASGI!"
         await send(
             {

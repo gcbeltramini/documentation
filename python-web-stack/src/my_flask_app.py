@@ -40,5 +40,5 @@ def io_bound() -> dict[str, str]:
 
 
 # # Flask development server
-# if __name__ == '__main__':
+# if __name__ == "__main__":
 #     app.run()
