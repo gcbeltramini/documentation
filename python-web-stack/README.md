@@ -92,8 +92,13 @@ Different ways to serve the app:
    `uvicorn` can run WSGI apps via `asgiref`), but not common or recommended for production.
    - `Flask` with `gunicorn` + `uvicorn` worker: not standard, as `Flask` is WSGI and should use
    `gunicorn`'s default sync worker.
-   - To use pure WSGI (only `gunicorn` without `flask`): `uv run --extra=gunicorn gunicorn --chdir src my_wsgi_asgi_app:gunicorn_app`
-   - To use pure ASGI (only `uvicorn` without `FastAPI`): `uv run --extra=uvicorn uvicorn --app-dir src my_wsgi_asgi_app:uvicorn_app`
+   - To use pure WSGI (only `gunicorn` without `flask`):
+
+     `uv run --extra=gunicorn gunicorn --chdir src my_wsgi_asgi_app:gunicorn_app`
+
+   - To use pure ASGI (only `uvicorn` without `FastAPI`):
+
+     `uv run --extra=uvicorn uvicorn --app-dir src my_wsgi_asgi_app:uvicorn_app`
 
 ## Testing
 
