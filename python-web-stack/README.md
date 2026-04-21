@@ -12,8 +12,8 @@ Different ways to serve the app:
 
 1. `Flask`:
    - Use case: development server
-   - Single-process, single-threaded command by default, and lacks robustness and performance
-   optimizations
+   - Single-process development server by default, and lacks the robustness and performance
+   optimizations expected from production servers
 
     ```shell
     uv run --extra=flask \
