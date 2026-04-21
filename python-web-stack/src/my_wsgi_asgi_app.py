@@ -71,4 +71,5 @@ async def uvicorn_app(scope, receive, send):
             }
         )
     else:
-        raise RuntimeError("This server doesn't support WebSocket.")
+        # Example: "websocket"
+        raise RuntimeError(f"Unsupported ASGI scope type: {scope['type']}")
