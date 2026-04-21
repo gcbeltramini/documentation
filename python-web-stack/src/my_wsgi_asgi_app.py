@@ -59,8 +59,8 @@ async def uvicorn_app(scope, receive, send):
                 "type": "http.response.start",
                 "status": 200,
                 "headers": [
-                    (b"Content-Type", b"text/plain"),
-                    (b"Content-Length", str(len(content)).encode("utf-8")),
+                    (b"content-type", b"text/plain"),
+                    (b"content-length", str(len(content)).encode("utf-8")),
                 ],
             }
         )
