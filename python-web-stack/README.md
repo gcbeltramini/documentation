@@ -17,7 +17,7 @@ Different ways to serve the app:
 
     ```shell
     uv run --extra=flask \
-      flask --app my_flask_app run --port 8000 --reload
+      flask --app src/my_flask_app run --port 8000 --reload
     ```
 
 2. `FastAPI`:
@@ -51,14 +51,14 @@ Different ways to serve the app:
     uv run \
       --extra=fastapi \
       --extra=uvicorn \
-      uvicorn my_fastapi_app:app
+      uvicorn my_fastapi_app:app --app-dir src
     ```
 
     ```shell
     uv run \
       --extra=fastapi \
       --extra=uvicorn \
-      uvicorn my_fastapi_app:app --workers 4
+      uvicorn my_fastapi_app:app --app-dir src --workers 4
     ```
 
 4. `FastAPI` + `gunicorn` + `uvicorn` workers:
@@ -68,7 +68,7 @@ Different ways to serve the app:
     uv run \
       --extra=fastapi \
       --extra=gunicorn \
-      gunicorn my_fastapi_app:app \
+      gunicorn --chdir src my_fastapi_app:app \
       -k uvicorn.workers.UvicornWorker \
       -w 4 \
       -b 0.0.0.0:8000
@@ -80,7 +80,7 @@ Different ways to serve the app:
     uv run \
       --extra=flask \
       --extra=gunicorn \
-      gunicorn my_flask_app:app \
+      gunicorn --chdir src my_flask_app:app \
       -w 4 \
       -b 0.0.0.0:8000
     ```
@@ -92,8 +92,8 @@ Different ways to serve the app:
    `uvicorn` can run WSGI apps via `asgiref`), but not common or recommended for production.
    - `Flask` with `gunicorn` + `uvicorn` worker: not standard, as `Flask` is WSGI and should use
    `gunicorn`'s default sync worker.
-   - To use pure WSGI (only `gunicorn` without `flask`): `uv run --extra=gunicorn gunicorn my_wsgi_asgi_app:gunicorn_app`
-   - To use pure ASGI (only `uvicorn` without `FastAPI`): `uv run --extra=uvicorn uvicorn my_wsgi_asgi_app:uvicorn_app`
+   - To use pure WSGI (only `gunicorn` without `flask`): `uv run --extra=gunicorn gunicorn --chdir src my_wsgi_asgi_app:gunicorn_app`
+   - To use pure ASGI (only `uvicorn` without `FastAPI`): `uv run --extra=uvicorn uvicorn --app-dir src my_wsgi_asgi_app:uvicorn_app`
 
 ## Testing
 
@@ -109,7 +109,7 @@ Different ways to serve the app:
     curl -X GET http://127.0.0.1:8000/async # only available for FastAPI; higher throughput than `sync`
     ```
 
-3. Performance testing (latency and throughput): `wrk http://127.0.0.1:8000` (add parameters to `wkr`,
+3. Performance testing (latency and throughput): `wrk http://127.0.0.1:8000` (add parameters to `wrk`,
    such as `-t20 -c100`)
    - Add `--log-level critical` to `uvicorn` and `gunicorn` commands to avoid logging all test requests
 
