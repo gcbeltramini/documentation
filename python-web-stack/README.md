@@ -6,6 +6,9 @@ To prepare the Python env, in the terminal, `cd` into this folder and run:
 uv python install 3.14t
 ```
 
+The `t` suffix refers to the free-threaded Python build. If that interpreter is unavailable in your
+environment, or you just want the standard setup, use `3.14` instead.
+
 ## How to run the app
 
 Different ways to serve the app:
