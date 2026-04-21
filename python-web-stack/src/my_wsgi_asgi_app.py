@@ -38,24 +38,35 @@ async def uvicorn_app(scope, receive, send):
     References
     ----------
     - https://uvicorn.dev/#quickstart
+    - https://uvicorn.dev/concepts/lifespan/#usage
     """
-    assert scope["type"] == "http"
-
-    content: bytes = b"Hello from ASGI!"
-
-    await send(
-        {
-            "type": "http.response.start",
-            "status": 200,
-            "headers": [
-                (b"content-type", b"text/plain"),
-                (b"content-length", str(len(content)).encode("utf-8")),
-            ],
-        }
-    )
-    await send(
-        {
-            "type": "http.response.body",
-            "body": content,
-        }
-    )
+    if scope["type"] == "lifespan":
+        while True:
+            message = await receive()
+            if message["type"] == "lifespan.startup":
+                print("Application is starting up...")
+                await send({"type": "lifespan.startup.complete"})
+            elif message["type"] == "lifespan.shutdown":
+                print("Application is shutting down...")
+                await send({"type": "lifespan.shutdown.complete"})
+                return
+    elif scope['type'] == 'http':
+        content: bytes = b"Hello from ASGI!"
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 200,
+                "headers": [
+                    (b"content-type", b"text/plain"),
+                    (b"content-length", str(len(content)).encode("utf-8")),
+                ],
+            }
+        )
+        await send(
+            {
+                "type": "http.response.body",
+                "body": content,
+            }
+        )
+    else:
+        raise RuntimeError("This server doesn't support WebSocket.")
